@@ -66,13 +66,13 @@ To simplify the usage of the `dump.sh` script, you can create a permanent alias.
 ### For Mac Users
 Run the following command in your terminal:
 ```
-echo "alias dump='$(pwd)/dump.sh'" >> ~/.zshrc && source ~/.zshrc
+echo "\nalias dump='$(pwd)/dump.sh'\n" >> ~/.zshrc && source ~/.zshrc
 ```
 
 ### For Linux Users
 Run the following command in your terminal:
 ```
-echo "alias dump='$(pwd)/dump.sh'" >> ~/.bashrc && source ~/.bashrc
+echo "\nalias dump='$(pwd)/dump.sh'\n" >> ~/.bashrc && source ~/.bashrc
 ```
 
 After running the appropriate command, you can use the `dump` command to execute the script:
