@@ -1,6 +1,10 @@
 # Repository Content Dump Script
 
-This script generates a comprehensive dump of a directory's contents, including file contents and a directory tree view. It is designed to be flexible and customizable through command-line options.
+This script generates a comprehensive dump of a directory's contents, including file contents and a directory tree view.
+
+It's intended to be used to export a directory's contents to a file, and then use that file to give a LLM context over an entire directory.
+
+It is designed to be flexible and customizable through command-line options.
 
 ## Features
 - Dumps file contents and directory tree views.
@@ -9,7 +13,7 @@ This script generates a comprehensive dump of a directory's contents, including 
 - Handles various file types, including attachments.
 
 ## Requirements
-- `bash` (version 4.0 or higher)
+- `bash` 4.0 or higher
 - `tree` command
 
 ## Installation
