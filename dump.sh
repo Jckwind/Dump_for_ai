@@ -5,7 +5,7 @@ set -e  # Exit immediately if a command exits with a non-zero status
 # Default values
 output=""
 depth=5
-exclude_patterns='\.git|.obsidian|.DS_Store|node_modules|dist|_build|build|__pycache__|.*\.log|.*\.tmp|.*\.dump|.*\.bak|.*\.dump\.txt'
+exclude_patterns='\.git|.cache|.obsidian|.DS_Store|node_modules|dist|_build|build|__pycache__|.*\.log|.*\.tmp|.*\.dump|.*\.bak|.*\.dump\.txt'
 
 # Function to display usage
 usage() {
@@ -121,15 +121,19 @@ should_exclude() {
 # Function to process directories and files
 process_path() {
     local path="$1"
+    local current_depth="$2"
+
     if should_exclude "$path"; then
         return
     fi
 
     if [ -d "$path" ]; then
         dump_directory_tree "$path"
-        find "$path" -maxdepth 1 -mindepth 1 | while read -r subpath; do
-            process_path "$subpath"
-        done
+        if [ -n "$depth" ] && [ "$current_depth" -lt "$depth" ]; then
+            find "$path" -maxdepth 1 -mindepth 1 | while IFS= read -r subpath; do
+                process_path "$subpath" $((current_depth + 1))
+            done
+        fi
     elif [ -f "$path" ]; then
         dump_file_content "$path"
     fi
@@ -137,10 +141,10 @@ process_path() {
 
 # Process each directory or file provided by the user
 if [ $# -eq 0 ]; then
-    process_path "$directory"
+    process_path "$directory" 0
 else
     for dir in "$@"; do
-        process_path "$dir"
+        process_path "$dir" 0
     done
 fi
 
